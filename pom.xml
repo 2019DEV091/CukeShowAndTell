@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>hellocucumber</groupId>
+	<artifactId>hellocucumber</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<cucumber.version>4.2.6</cucumber.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<cucumber.report.json.location>${project.basedir}/target/cucumber-report/</cucumber.report.json.location>
+		<generated.report.location>${project.build.directory}\cluecumber-report</generated.report.location>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.trivago.rta</groupId>
+				<artifactId>cluecumber-report-plugin</artifactId>
+				<version>2.2.0</version>
+				<executions>
+					<execution>
+						<id>report</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>reporting</goal>
+						</goals>
+						<configuration>
+							<sourceJsonReportDirectory>${cucumber.report.json.location}</sourceJsonReportDirectory>
+							<generatedHtmlReportDirectory>${generated.report.location}</generatedHtmlReportDirectory>
+
+							<!-- Optional custom parameters that are shown on the start page if 
+								they have a value -->
+							<customParameters>
+								<Custom_Parameter>This is a test</Custom_Parameter>
+								<Custom_URL>http://www.google.com</Custom_URL>
+								<Custom_test>${testje}</Custom_test>
+								<Empty_Parameter />
+							</customParameters>
+
+							<!-- Optional custom CSS for custom styling -->
+							<!--<customCss>custom/custom.css</customCss> -->
+
+							<!-- Optional skip property for the whole report generation -->
+							<!--<skip>true</skip> -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.17</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<forkCount>0</forkCount>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
